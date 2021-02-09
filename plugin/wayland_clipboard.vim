@@ -1,5 +1,5 @@
 " wayland-clipboard.vim - Integrate with Wayland's clipboard when using the '+'
-" register. Requires wl-clipboard and the +eval Vim feature.
+" register. Requires wl-clipboard and the +eval and +clipboard Vim features.
 "
 " This script was inspired by
 " https://www.reddit.com/r/Fedora/comments/ax9p9t/vim_and_system_clipboard_under_wayland/
