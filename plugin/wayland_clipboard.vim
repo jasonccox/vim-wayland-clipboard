@@ -30,5 +30,5 @@ augroup waylandyank
 augroup END
 
 " remap paste commands to first pull in clipboard contents with wl-paste
-nnoremap "+p :<C-U>let @+=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . '"+p'<cr>
-nnoremap "+P :<C-U>let @+=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . '"+P'<cr>
+nnoremap "+p :<C-U>let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . 'p'<cr>
+nnoremap "+P :<C-U>let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . 'P'<cr>
