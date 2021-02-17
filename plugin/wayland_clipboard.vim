@@ -16,9 +16,18 @@ if empty($WAYLAND_DISPLAY)
     finish
 endif
 
-" pass register contents to wl-copy if the '+' register was used
+" On Vim builds without '+clipboard', the '+' register doesn't work for
+" yanking. My solution is to map '"+' to '"w' and send the 'w' register to the
+" Wayland clipboard as well.
+"
+" This variable controls whether '"+' gets mapped to '"w'. It's on by default
+" if the '+clipboard' feature isn't available, but the user can turn it off
+" always if desired.
+let s:plus_to_w = !has('+clipboard') && !exists('g:wayland_clipboard_no_plus_to_w')
+
+" pass register contents to wl-copy if the '+' (or 'w') register was used
 function! s:WaylandYank()
-    if v:event['regname'] == '+'
+    if v:event['regname'] == '+' || (v:event['regname'] == 'w' && s:plus_to_w)
         call system('wl-copy', getreg(v:event['regname']))
     endif
 endfunction
@@ -32,3 +41,8 @@ augroup END
 " remap paste commands to first pull in clipboard contents with wl-paste
 nnoremap "+p :<C-U>let @"=substitute(system('wl-paste --no-newline'), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . 'p'<cr>
 nnoremap "+P :<C-U>let @"=substitute(system('wl-paste --no-newline'), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . 'P'<cr>
+
+" remap '"+' to '"w' -- see the comment above the declaration of 's:plus_to_w'
+if s:plus_to_w
+    nnoremap "+ "w
+endif
