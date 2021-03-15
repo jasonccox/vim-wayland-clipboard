@@ -45,4 +45,5 @@ nnoremap "+P :<C-U>let @"=substitute(system('wl-paste --no-newline'), '<C-v><C-m
 " remap '"+' to '"w' -- see the comment above the declaration of 's:plus_to_w'
 if s:plus_to_w
     nnoremap "+ "w
+    vnoremap "+ "w
 endif
