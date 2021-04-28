@@ -5,6 +5,8 @@
 " https://www.reddit.com/r/Fedora/comments/ax9p9t/vim_and_system_clipboard_under_wayland/
 " but uses an autocmd to allow yanking with operators to work.
 
+" Early exit checks {{{
+
 " only load this script once
 if exists('g:loaded_wayland_clipboard')
     finish
@@ -16,6 +18,10 @@ if empty($WAYLAND_DISPLAY)
     finish
 endif
 
+" }}}
+
+" Yanking {{{
+
 " On Vim builds without '+clipboard', the '+' register doesn't work for
 " yanking. My solution is to map '"+' to '"w' and send the 'w' register to the
 " Wayland clipboard as well.
@@ -24,6 +30,13 @@ endif
 " if the '+clipboard' feature isn't available, but the user can turn it off
 " always if desired.
 let s:plus_to_w = !has('+clipboard') && !exists('g:wayland_clipboard_no_plus_to_w')
+
+" remap '"+' to '"w' -- this will only apply to yanking since '"+p' and '"+P'
+" are also remapped below
+if s:plus_to_w
+    nnoremap "+ "w
+    vnoremap "+ "w
+endif
 
 " pass register contents to wl-copy if the '+' (or 'w') register was used
 function! s:WaylandYank()
@@ -38,12 +51,14 @@ augroup waylandyank
     autocmd TextYankPost * call s:WaylandYank()
 augroup END
 
+" }}}
+
+" Pasting {{{
+
 " remap paste commands to first pull in clipboard contents with wl-paste
 nnoremap "+p :<C-U>let @"=substitute(system('wl-paste --no-newline'), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . 'p'<cr>
 nnoremap "+P :<C-U>let @"=substitute(system('wl-paste --no-newline'), '<C-v><C-m>', '', 'g') \| exec 'normal! ' . v:count1 . 'P'<cr>
 
-" remap '"+' to '"w' -- see the comment above the declaration of 's:plus_to_w'
-if s:plus_to_w
-    nnoremap "+ "w
-    vnoremap "+ "w
-endif
+" }}}
+
+" vim:foldmethod=marker:foldlevel=0
