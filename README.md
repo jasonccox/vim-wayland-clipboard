@@ -17,7 +17,7 @@ Use Vim8's built-in packages:
 
 ## Usage
 
-Just use `"+y`, `"+p`, and friends as you always do.
+Just use `"+y`, `"+p`, `ctrl-r+`, and friends as you always do.
 
 ## Notes
 
