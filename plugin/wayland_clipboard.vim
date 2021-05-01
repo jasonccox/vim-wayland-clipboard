@@ -62,6 +62,10 @@ for p in ['p', 'P']
     execute "nnoremap \"+" . p . " :<C-U>" . prepaste . " \\| exec 'normal! ' . v:count1 . '" . p . "'<CR>"
 endfor
 
+for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
+    execute "inoremap " . cr . "+ <C-O>:<C-U>" . prepaste . "<CR>" . cr . "\""
+endfor
+
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
