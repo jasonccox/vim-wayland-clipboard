@@ -15,10 +15,22 @@ Use Vim8's built-in packages:
 1. `mkdir -p ~/.vim/pack/vim-wayland-clipboard/start/`
 2. `git clone https://github.com/jasonccox/vim-wayland-clipboard.git ~/.vim/pack/vim-wayland-clipboard/start/vim-wayland-clipboard`
 
-## Usage
+## Usage and Features
 
-Just use `"+y`, `"+p`, `ctrl-r+`, and friends as you always do.
+Just use `"+y`, `"+p`, `<C-R>+`, and friends as you always do. Specifically, here's what's supported:
+
+- Any yank command that starts with `"+` (e.g. `"+yy` or `"+yiw`) in insert and visual modes.
+- Pasting in normal mode with `"+p` or `"+P`.
+- Pasting in insert mode with `<C-R>+`, `<C-R><C-R>+`, `<C-R><C-O>+`, or `<C-R><C-P>+`.
+
+If you need more functionality, consider checking out [vim-fakeclip](https://github.com/kana/vim-fakeclip).
 
 ## Notes
 
+### Clobbering the `w` Register
+
 On Vim builds without `clipboard`, the `+` register doesn't work for yanking. My solution is to map `"+` to `"w` and send the `w` register to the Wayland clipboard as well. (This only occurs when the `clipboard` feature is missing.) If you use the `w` register for other things and don't want it to clobber your system clipboard, put `let g:wayland_clipboard_no_plus_to_w = 1` in your `vimrc` to disable this feature.
+
+### Non-recursive Mappings
+
+This plugin uses mappings of `"+p`, `<C-R>+`, `"+`, etc. to do its job. As a result, it won't work with existing *non-recursive* mappings that run these commands, e.g. `nnoremap <Leader>p "+p`. If you have mappings like these, you'll need to use their recursive counterparts instead for the plugin to work.
