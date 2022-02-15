@@ -42,6 +42,7 @@ endif
 function! s:WaylandYank()
     if v:event['regname'] == '+' || (v:event['regname'] == 'w' && s:plus_to_w)
         call system('wl-copy', getreg(v:event['regname']))
+        redraw!
     endif
 endfunction
 
