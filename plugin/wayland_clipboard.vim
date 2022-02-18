@@ -41,7 +41,7 @@ endif
 " pass register contents to wl-copy if the '+' (or 'w') register was used
 function! s:WaylandYank()
     if v:event['regname'] == '+' || (v:event['regname'] == 'w' && s:plus_to_w)
-        call system('wl-copy', getreg(v:event['regname']))
+        silent call system('wl-copy', getreg(v:event['regname']))
     endif
 endfunction
 
@@ -56,14 +56,14 @@ augroup END
 " Pasting {{{
 
 " remap paste commands to first pull in clipboard contents with wl-paste
-let prepaste = "let @\"=substitute(system('wl-paste --no-newline'), \"\\r\", '', 'g')"
+let prepaste = "silent let @\"=substitute(system('wl-paste --no-newline'), \"\\r\", '', 'g')"
 
 for p in ['p', 'P']
-    execute "nnoremap \"+" . p . " :<C-U>" . prepaste . " \\| exec 'normal! ' . v:count1 . '" . p . "'<CR>"
+    execute "nnoremap <silent> \"+" . p . " :<C-U>" . prepaste . " \\| exec 'normal! ' . v:count1 . '" . p . "'<CR>"
 endfor
 
 for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
-    execute "inoremap " . cr . "+ <C-O>:<C-U>" . prepaste . "<CR>" . cr . "\""
+    execute "inoremap <silent> " . cr . "+ <C-O>:<C-U>" . prepaste . "<CR>" . cr . "\""
 endfor
 
 " }}}
