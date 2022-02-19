@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.2.1] - 2022-02-18
+### Fixed
+- Don't print control characters on screen from system calls to `wl-copy`/`wl-paste`.
+
 ## [0.2.0] - 2021-04-30
 ### Added
 - Make `ctrl-r+` and friends work in insert mode.
