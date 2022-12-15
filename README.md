@@ -36,3 +36,9 @@ On Vim builds without `clipboard`, the `+` register doesn't work for yanking. My
 ### Non-recursive Mappings
 
 This plugin uses mappings of `"+p`, `<C-R>+`, `"+`, etc. to do its job. As a result, it won't work with existing *non-recursive* mappings that run these commands, e.g. `nnoremap <Leader>p "+p`. If you have mappings like these, you'll need to use their recursive counterparts instead for the plugin to work.
+
+## Contributing
+
+Contributions are welcome! You can send questions, bug reports, patches, etc. by email to [~jcc/public-inbox@lists.sr.ht](https://lists.sr.ht/~jcc/public-inbox). (Don't know how to contribute via email? Check out the interactive tutorial at [git-send-email.io](https://git-send-email.io), or [email me](mailto:me@jasoncarloscox.com) for help.)
+
+GitHub issues and pull requests are fine, too.
