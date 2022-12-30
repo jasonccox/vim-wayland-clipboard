@@ -41,10 +41,17 @@ endif
 " pass register contents to wl-copy if the '+' (or 'w') register was used
 function! s:WaylandYank()
     if v:event['regname'] == '+' || (v:event['regname'] == 'w' && s:plus_to_w)
-        silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
-            \   "in_io": "null", "out_io": "null", "err_io": "null",
-            \   "stoponexit": "",
-            \ })
+        if has("nvim")
+            silent call jobstart(['wl-copy', '--', getreg(v:event['regname'])], {
+                \   "in_io": "null", "out_io": "null", "err_io": "null",
+                \   "stoponexit": "",
+                \ })
+        else
+            silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
+                \   "in_io": "null", "out_io": "null", "err_io": "null",
+                \   "stoponexit": "",
+                \ })
+        endif
     endif
 endfunction
 
