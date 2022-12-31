@@ -13,8 +13,9 @@ if exists('g:loaded_wayland_clipboard')
 endif
 let g:loaded_wayland_clipboard = 1
 
-" only run this on Wayland
-if empty($WAYLAND_DISPLAY)
+" only run this in Vim on Wayland -- Vim on X has native clipboard support,
+" and Neovim already works with wl-copy by default
+if has('nvim') || empty($WAYLAND_DISPLAY)
     finish
 endif
 
