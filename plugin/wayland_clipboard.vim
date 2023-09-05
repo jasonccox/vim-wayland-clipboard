@@ -41,7 +41,9 @@ endif
 
 " pass register contents to wl-copy if the '+' (or 'w') register was used
 function! s:WaylandYank()
-    if v:event['regname'] == '+' || (v:event['regname'] == 'w' && s:plus_to_w)
+    if v:event['regname'] == '+' ||
+                \ (v:event['regname'] == 'w' && s:plus_to_w) ||
+                \ (v:event['regname'] == '' && &clipboard == 'unnamedplus')
         silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
             \   "in_io": "null", "out_io": "null", "err_io": "null",
             \   "stoponexit": "",
@@ -65,7 +67,11 @@ function! s:clipboard_to_unnamed()
     silent let @"=substitute(system('wl-paste --no-newline'), "\r", '', 'g')
 endfunction
 
-function! s:put(p)
+function! s:put(p, fallback)
+    if a:fallback
+        return a:p
+    endif
+
     call s:clipboard_to_unnamed()
     return '""' . a:p
 endfunction
@@ -75,8 +81,10 @@ function! s:ctrl_r(cr)
     return cr . '"'
 endfunction
 
-nnoremap <expr> <silent> "+p <SID>put('p')
-nnoremap <expr> <silent> "+P <SID>put('P')
+nnoremap <expr> <silent> "+p <SID>put('p', v:false)
+nnoremap <expr> <silent> "+P <SID>put('P', v:false)
+nnoremap <expr> <silent> p <SID>put('p', &clipboard != 'unnamedplus')
+nnoremap <expr> <silent> P <SID>put('P', &clipboard != 'unnamedplus')
 
 nnoremap <expr> <silent> <C-R>+ <SID>ctrl_r("\<C-R>")
 nnoremap <expr> <silent> <C-R><C-R>+ <SID>ctrl_r("\<C-R>\<C-R>")
