@@ -30,6 +30,16 @@ If you need more functionality, consider checking out [vim-fakeclip](https://git
 
 ## Notes
 
+### Passing extra arguments to `wl-copy` or `wl-paste`
+
+If you want to pass extra arguments to `wl-copy`, set `g:wayland_clipboard_copy_args` to a list of strings, one per argument. For example, to copy to the primary clipboard and only allow the contents to be pasted once, you could do the following:
+
+```vimscript
+let g:wayland_clipboard_copy_args = ['--primary', '--paste-once']
+```
+
+To pass extra arguments to `wl-paste`, use `g:wayland_clipboard_paste_args` in the same way.
+
 ### Clobbering the `w` Register
 
 On Vim builds without `clipboard`, the `+` register doesn't work for yanking. My solution is to map `"+` to `"w` and send the `w` register to the Wayland clipboard as well. (This only occurs when the `clipboard` feature is missing.) If you use the `w` register for other things and don't want it to clobber your system clipboard, put `let g:wayland_clipboard_no_plus_to_w = 1` in your `vimrc` to disable this feature.

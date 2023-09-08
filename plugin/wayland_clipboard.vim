@@ -39,12 +39,14 @@ if s:plus_to_w
     vnoremap "+ "w
 endif
 
+let s:copy_args = exists('g:wayland_clipboard_copy_args') ? g:wayland_clipboard_copy_args : []
+
 " pass register contents to wl-copy if the '+' (or 'w') register was used
 function! s:WaylandYank()
     if v:event['regname'] == '+' ||
                 \ (v:event['regname'] == 'w' && s:plus_to_w) ||
                 \ (v:event['regname'] == '' && &clipboard == 'unnamedplus')
-        silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
+        silent call job_start(['wl-copy'] + s:copy_args + ['--', getreg(v:event['regname'])], {
             \   "in_io": "null", "out_io": "null", "err_io": "null",
             \   "stoponexit": "",
             \ })
@@ -63,8 +65,11 @@ augroup END
 
 " remap paste commands to first pull in clipboard contents with wl-paste
 
+let s:paste_args = exists('g:wayland_clipboard_paste_args') ? g:wayland_clipboard_paste_args : []
+let s:paste_args_str = empty(s:paste_args) ? '' : ' ' . join(s:paste_args)
+
 function! s:clipboard_to_unnamed()
-    silent let @"=substitute(system('wl-paste --no-newline'), "\r", '', 'g')
+    silent let @"=substitute(system('wl-paste --no-newline' . s:paste_args_str), "\r", '', 'g')
 endfunction
 
 function! s:put(p, fallback)
