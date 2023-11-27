@@ -91,6 +91,11 @@ nnoremap <expr> <silent> "+P <SID>put('P', v:false)
 nnoremap <expr> <silent> p <SID>put('p', &clipboard != 'unnamedplus')
 nnoremap <expr> <silent> P <SID>put('P', &clipboard != 'unnamedplus')
 
+vnoremap <expr> <silent> "+p <SID>put('p', v:false)
+vnoremap <expr> <silent> "+P <SID>put('P', v:false)
+vnoremap <expr> <silent> p <SID>put('p', &clipboard != 'unnamedplus')
+vnoremap <expr> <silent> P <SID>put('P', &clipboard != 'unnamedplus')
+
 inoremap <expr> <silent> <C-R>+ <SID>ctrl_r("\<C-R>")
 inoremap <expr> <silent> <C-R><C-R>+ <SID>ctrl_r("\<C-R>\<C-R>")
 inoremap <expr> <silent> <C-R><C-O>+ <SID>ctrl_r("\<C-R>\<C-O>")

@@ -22,9 +22,9 @@ Use Vim8's built-in packages:
 Just use `"+y`, `"+p`, `<C-R>+`, and friends as you always do. Specifically, here's what's supported:
 
 - Any yank command that starts with `"+` (e.g. `"+yy` or `"+yiw`) in insert and visual modes.
-- Pasting in normal mode with `"+p` or `"+P`.
+- Pasting in normal and visual modes with `"+p` or `"+P`.
 - Pasting in insert mode with `<C-R>+`, `<C-R><C-R>+`, `<C-R><C-O>+`, or `<C-R><C-P>+`.
-- Yanking and pasting (`p` and `P` in normal mode) with `clipboard=unnamedplus`.
+- Yanking and pasting (`p` and `P` in normal and visual modes) with `clipboard=unnamedplus`.
 
 If you need more functionality, consider checking out [vim-fakeclip](https://github.com/kana/vim-fakeclip).
 
