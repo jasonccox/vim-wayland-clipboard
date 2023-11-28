@@ -83,7 +83,7 @@ endfunction
 
 function! s:ctrl_r(cr)
     call s:clipboard_to_unnamed()
-    return cr . '"'
+    return a:cr . '"'
 endfunction
 
 nnoremap <expr> <silent> "+p <SID>put('p', v:false)
@@ -91,10 +91,10 @@ nnoremap <expr> <silent> "+P <SID>put('P', v:false)
 nnoremap <expr> <silent> p <SID>put('p', &clipboard != 'unnamedplus')
 nnoremap <expr> <silent> P <SID>put('P', &clipboard != 'unnamedplus')
 
-nnoremap <expr> <silent> <C-R>+ <SID>ctrl_r("\<C-R>")
-nnoremap <expr> <silent> <C-R><C-R>+ <SID>ctrl_r("\<C-R>\<C-R>")
-nnoremap <expr> <silent> <C-R><C-O>+ <SID>ctrl_r("\<C-R>\<C-O>")
-nnoremap <expr> <silent> <C-R><C-P>+ <SID>ctrl_r("\<C-R>\<C-P>")
+inoremap <expr> <silent> <C-R>+ <SID>ctrl_r("\<C-R>")
+inoremap <expr> <silent> <C-R><C-R>+ <SID>ctrl_r("\<C-R>\<C-R>")
+inoremap <expr> <silent> <C-R><C-O>+ <SID>ctrl_r("\<C-R>\<C-O>")
+inoremap <expr> <silent> <C-R><C-P>+ <SID>ctrl_r("\<C-R>\<C-P>")
 
 " }}}
 
