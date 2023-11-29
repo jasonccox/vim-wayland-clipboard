@@ -45,7 +45,7 @@ let s:copy_args = exists('g:wayland_clipboard_copy_args') ? g:wayland_clipboard_
 function! s:WaylandYank()
     if v:event['regname'] == '+' ||
                 \ (v:event['regname'] == 'w' && s:plus_to_w) ||
-                \ (v:event['regname'] == '' && &clipboard == 'unnamedplus')
+                \ (v:event['regname'] == '' && &clipboard =~ 'unnamedplus')
         silent call job_start(['wl-copy'] + s:copy_args + ['--', getreg(v:event['regname'])], {
             \   "in_io": "null", "out_io": "null", "err_io": "null",
             \   "stoponexit": "",
@@ -88,13 +88,13 @@ endfunction
 
 nnoremap <expr> <silent> "+p <SID>put('p', v:false)
 nnoremap <expr> <silent> "+P <SID>put('P', v:false)
-nnoremap <expr> <silent> p <SID>put('p', &clipboard != 'unnamedplus')
-nnoremap <expr> <silent> P <SID>put('P', &clipboard != 'unnamedplus')
+nnoremap <expr> <silent> p <SID>put('p', &clipboard !~ 'unnamedplus')
+nnoremap <expr> <silent> P <SID>put('P', &clipboard !~ 'unnamedplus')
 
 vnoremap <expr> <silent> "+p <SID>put('p', v:false)
 vnoremap <expr> <silent> "+P <SID>put('P', v:false)
-vnoremap <expr> <silent> p <SID>put('p', &clipboard != 'unnamedplus')
-vnoremap <expr> <silent> P <SID>put('P', &clipboard != 'unnamedplus')
+vnoremap <expr> <silent> p <SID>put('p', &clipboard !~ 'unnamedplus')
+vnoremap <expr> <silent> P <SID>put('P', &clipboard !~ 'unnamedplus')
 
 inoremap <expr> <silent> <C-R>+ <SID>ctrl_r("\<C-R>")
 inoremap <expr> <silent> <C-R><C-R>+ <SID>ctrl_r("\<C-R>\<C-R>")
