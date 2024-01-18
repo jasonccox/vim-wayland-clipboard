@@ -23,14 +23,18 @@ endif
 
 " Yanking {{{
 
-" On Vim builds without 'clipboard', the '+' register doesn't work for
-" yanking. My solution is to map '"+' to '"w' and send the 'w' register to the
+" The '+' register doesn't work for yanking if:
+" - vim was built without 'clipboard'.
+" - x11 / xwayland is unavailable.
+" (https://github.com/vim/vim/blob/93197fde0f1db09b1e495cf3eb14a8f42c318b80/src/register.c#L247)
+"
+" My solution is to map '"+' to '"w' and send the 'w' register to the
 " Wayland clipboard as well.
 "
 " This variable controls whether '"+' gets mapped to '"w'. It's on by default
-" if the 'clipboard' feature isn't available, but the user can turn it off
-" always if desired.
-let s:plus_to_w = !has('clipboard') && !exists('g:wayland_clipboard_no_plus_to_w')
+" if the 'clipboard' feature isn't available, or if $DISPLAY isn't set,
+" but the user can turn it off always if desired.
+let s:plus_to_w = (!has('clipboard') || empty($DISPLAY)) && !exists('g:wayland_clipboard_no_plus_to_w')
 
 " remap '"+' to '"w' -- this will only apply to yanking since '"+p' and '"+P'
 " are also remapped below

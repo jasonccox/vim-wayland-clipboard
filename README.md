@@ -42,7 +42,7 @@ To pass extra arguments to `wl-paste`, use `g:wayland_clipboard_paste_args` in t
 
 ### Clobbering the `w` Register
 
-On Vim builds without `clipboard`, the `+` register doesn't work for yanking. My solution is to map `"+` to `"w` and send the `w` register to the Wayland clipboard as well. (This only occurs when the `clipboard` feature is missing.) If you use the `w` register for other things and don't want it to clobber your system clipboard, put `let g:wayland_clipboard_no_plus_to_w = 1` in your `vimrc` to disable this feature.
+On Vim builds without `clipboard`, or if Xwayland isn't running, the `+` register doesn't work for yanking. My solution is to map `"+` to `"w` and send the `w` register to the Wayland clipboard as well. (This only occurs when the `clipboard` feature is missing or the X `$DISPLAY` environment vairable is empty.) If you use the `w` register for other things and don't want it to clobber your system clipboard, put `let g:wayland_clipboard_no_plus_to_w = 1` in your `vimrc` to disable this feature.
 
 ### Non-recursive Mappings
 
