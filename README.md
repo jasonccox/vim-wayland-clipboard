@@ -24,7 +24,7 @@ Just use `"+y`, `"+p`, `<C-R>+`, and friends as you always do. Specifically, her
 - Any yank command that starts with `"+` (e.g. `"+yy` or `"+yiw`) in insert and visual modes.
 - Pasting in normal and visual modes with `"+p` or `"+P`.
 - Pasting in insert mode with `<C-R>+`, `<C-R><C-R>+`, `<C-R><C-O>+`, or `<C-R><C-P>+`.
-- Yanking and pasting (`p` and `P` in normal and visual modes) with `clipboard=unnamedplus`.
+- Yanking and pasting (`p` and `P` in normal and visual modes) with `clipboard=unnamedplus` or `g:wayland_clipboard_unnamedplus = 1`.
 
 If you need more functionality, consider checking out [vim-fakeclip](https://github.com/kana/vim-fakeclip).
 
