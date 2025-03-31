@@ -55,10 +55,11 @@ function! s:WaylandYank()
     if v:event['regname'] == '+' ||
                 \ (v:event['regname'] == 'w' && s:plus_to_w) ||
                 \ (v:event['regname'] == '' && s:unnamedplus())
-        silent call job_start(['wl-copy'] + s:copy_args + ['--', getreg(v:event['regname'])], {
-            \   "in_io": "null", "out_io": "null", "err_io": "null",
+        let job = job_start(['wl-copy'] + s:copy_args, {
+            \   "in_io": "pipe", "out_io": "null", "err_io": "null",
             \   "stoponexit": "",
             \ })
+        call ch_sendraw(job, getreg(v:event['regname']))
     endif
 endfunction
 
