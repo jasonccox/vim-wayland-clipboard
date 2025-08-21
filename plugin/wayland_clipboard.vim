@@ -60,6 +60,7 @@ function! s:WaylandYank()
             \   "stoponexit": "",
             \ })
         call ch_sendraw(job, getreg(v:event['regname']))
+        call ch_close(job)
     endif
 endfunction
 
