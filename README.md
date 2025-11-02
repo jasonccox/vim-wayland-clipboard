@@ -17,6 +17,12 @@ Use Vim8's built-in packages:
 1. `mkdir -p ~/.vim/pack/vim-wayland-clipboard/start/`
 2. `git clone https://github.com/jasonccox/vim-wayland-clipboard.git ~/.vim/pack/vim-wayland-clipboard/start/vim-wayland-clipboard`
 
+Or use a package manager. For example, with [vim-plug](https://github.com/junegunn/vim-plug):
+
+```vimscript
+Plug 'jasonccox/vim-wayland-clipboard`
+```
+
 ## Usage and Features
 
 Just use `"+y`, `"+p`, `<C-R>+`, and friends as you always do. Specifically, here's what's supported:
