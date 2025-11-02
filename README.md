@@ -20,7 +20,7 @@ Use Vim8's built-in packages:
 Or use a package manager. For example, with [vim-plug](https://github.com/junegunn/vim-plug):
 
 ```vimscript
-Plug 'jasonccox/vim-wayland-clipboard`
+Plug 'jasonccox/vim-wayland-clipboard'
 ```
 
 ## Usage and Features
