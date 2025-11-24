@@ -43,6 +43,7 @@ if s:plus_to_w
     vnoremap "+ "w
 endif
 
+let s:copy_command = exists('g:wayland_clipboard_copy_command') ? g:wayland_clipboard_copy_command : 'wl-copy'
 let s:copy_args = exists('g:wayland_clipboard_copy_args') ? g:wayland_clipboard_copy_args : []
 
 function! s:unnamedplus()
@@ -55,7 +56,7 @@ function! s:WaylandYank()
     if v:event['regname'] == '+' ||
                 \ (v:event['regname'] == 'w' && s:plus_to_w) ||
                 \ (v:event['regname'] == '' && s:unnamedplus())
-        let job = job_start(['wl-copy'] + s:copy_args, {
+        let job = job_start([s:copy_command] + s:copy_args, {
             \   "in_io": "pipe", "out_io": "null", "err_io": "null",
             \   "stoponexit": "",
             \ })
@@ -76,11 +77,12 @@ augroup END
 
 " remap paste commands to first pull in clipboard contents with wl-paste
 
+let s:paste_command = exists('g:wayland_clipboard_paste_command') ? g:wayland_clipboard_paste_command : 'wl-paste --no-newline'
 let s:paste_args = exists('g:wayland_clipboard_paste_args') ? g:wayland_clipboard_paste_args : []
 let s:paste_args_str = empty(s:paste_args) ? '' : ' ' . join(s:paste_args)
 
 function! s:clipboard_to_unnamed()
-    silent let @"=substitute(system('wl-paste --no-newline' . s:paste_args_str), "\r", '', 'g')
+    silent let @"=substitute(system(s:paste_command . s:paste_args_str), "\r", '', 'g')
 endfunction
 
 function! s:put(p, fallback)
