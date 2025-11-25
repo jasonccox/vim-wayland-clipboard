@@ -46,6 +46,34 @@ let g:wayland_clipboard_copy_args = ['--primary', '--paste-once']
 
 To pass extra arguments to `wl-paste`, use `g:wayland_clipboard_paste_args` in the same way.
 
+### Using a different clipboard backend
+
+If you want a different backend to manage your clipboard operations, there are the `g:wayland_clipboard_copy_command`
+and `g:wayland_clipboard_paste_command` variables, which can be used together with the aforementioned
+`g:wayland_clipboard_copy_args` and `g:wayland_clipboard_paste_args`.
+
+As an example, a *KDE Plasma 6* user might want to integrate the Klipper D-Bus service, usually loaded
+at the startup by the desktop environment itself:
+
+```vimscript
+let g:wayland_clipboard_copy_command = 'qdbus6'
+let g:wayland_clipboard_paste_command = 'qdbus6'
+
+let g:wayland_clipboard_copy_args = ['org.kde.klipper', '/klipper', 'setClipboardContents']
+let g:wayland_clipboard_paste_args = ['org.kde.klipper', '/klipper', 'getClipboardContents']
+```
+
+Of course, this would work the same under *KDE Plasma 5*, just replace *qdbus6* with *qdbus*,
+the arguments can stay the same:
+
+```vimscript
+let g:wayland_clipboard_copy_command = 'qdbus'
+let g:wayland_clipboard_paste_command = 'qdbus'
+
+let g:wayland_clipboard_copy_args = ['org.kde.klipper', '/klipper', 'setClipboardContents']
+let g:wayland_clipboard_paste_args = ['org.kde.klipper', '/klipper', 'getClipboardContents']
+```
+
 ### Clobbering the `w` Register
 
 On Vim builds without `clipboard`, or if Xwayland isn't running, the `+` register doesn't work for yanking. My solution is to map `"+` to `"w` and send the `w` register to the Wayland clipboard as well. (This only occurs when the `clipboard` feature is missing or the X `$DISPLAY` environment vairable is empty.) If you use the `w` register for other things and don't want it to clobber your system clipboard, put `let g:wayland_clipboard_no_plus_to_w = 1` in your `vimrc` to disable this feature.
