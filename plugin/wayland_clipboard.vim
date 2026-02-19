@@ -34,7 +34,14 @@ endif
 " This variable controls whether '"+' gets mapped to '"w'. It's on by default
 " if the 'clipboard' feature isn't available, or if $DISPLAY isn't set,
 " but the user can turn it off always if desired.
-let s:plus_to_w = (!has('clipboard') || empty($DISPLAY)) && !exists('g:wayland_clipboard_no_plus_to_w')
+let s:plus_to_w = exists('g:wayland_clipboard_plus_to_w')
+            \ ? g:wayland_clipboard_plus_to_w
+            \ : !has('clipboard') || empty($DISPLAY)
+
+" preserve legacy behavior (we always recommend the variable above instead now)
+if exists('g:wayland_clipboard_no_plus_to_w')
+    let s:plus_to_w = 0
+endif
 
 " remap '"+' to '"w' -- this will only apply to yanking since '"+p' and '"+P'
 " are also remapped below

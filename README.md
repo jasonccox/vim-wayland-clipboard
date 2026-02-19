@@ -74,9 +74,13 @@ let g:wayland_clipboard_copy_args = ['org.kde.klipper', '/klipper', 'setClipboar
 let g:wayland_clipboard_paste_args = ['org.kde.klipper', '/klipper', 'getClipboardContents']
 ```
 
+### Mitigating the `Clipboard register not available` error
+
+The plugin does its best to detect when the `+` register is not available and work around it by mapping `"+` to `"w`. (See *Clobbering the `w` Register* below.) The detection is not fool-proof, though. If you are still seeing a `Clipboard register not available` error, set `let g:wayland_clipboard_plus_to_w = 1` in your `vimrc` to forcibly enable the workaround.
+
 ### Clobbering the `w` Register
 
-On Vim builds without `clipboard`, or if Xwayland isn't running, the `+` register doesn't work for yanking. My solution is to map `"+` to `"w` and send the `w` register to the Wayland clipboard as well. (This only occurs when the `clipboard` feature is missing or the X `$DISPLAY` environment vairable is empty.) If you use the `w` register for other things and don't want it to clobber your system clipboard, put `let g:wayland_clipboard_no_plus_to_w = 1` in your `vimrc` to disable this feature.
+On Vim builds without `clipboard`, or if Xwayland isn't running, the `+` register doesn't work for yanking. My solution is to map `"+` to `"w` and send the `w` register to the Wayland clipboard as well. (This only occurs when the `clipboard` feature is missing or the X `$DISPLAY` environment vairable is empty.) If you use the `w` register for other things and don't want it to clobber your system clipboard, put `let g:wayland_clipboard_plus_to_w = 0` in your `vimrc` to disable this feature.
 
 ### Non-recursive Mappings
 
