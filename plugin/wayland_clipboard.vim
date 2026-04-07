@@ -69,6 +69,10 @@ function! s:WaylandYank()
             \ })
         call ch_sendraw(job, getreg(v:event['regname']))
         call ch_close(job)
+
+        " keeping a reference to the last job until after the next one
+        " replaces it ensures that the process gets reaped
+        let s:last_job = job
     endif
 endfunction
 
